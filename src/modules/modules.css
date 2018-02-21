@@ -1,0 +1,45 @@
+nav {
+  position: absolute;
+  left: 5%;
+  display: flex;
+  width: 90%;
+  margin-top: 20px;
+  height: 40px;
+  line-height: 40px;
+  flex-direction: row;
+  justify-content: space-between; }
+  nav div {
+    display: inline-block; }
+  nav div.other a {
+    font-size: 16px;
+    color: white;
+    text-decoration: none; }
+
+div.logo {
+  z-index: 2000;
+  display: inline-block;
+  position: relative;
+  text-align: left; }
+  div.logo a {
+    font-size: 16px;
+    padding: 2px 0px; }
+    div.logo a span {
+      color: white;
+      display: inline-block;
+      letter-spacing: 3px; }
+    div.logo a span.sandbox {
+      font-family: 'dinmedium', sans-serif;
+      color: white;
+      margin-left: 2px; }
+    div.logo a span.square {
+      position: relative;
+      color: white;
+      margin-left: 3px;
+      background: #5000ff;
+      transition: 0.2s ease;
+      width: 6px;
+      height: 6px; }
+    div.logo a:hover span.square {
+      background: #5000ff;
+      width: 12px;
+      height: 12px; }

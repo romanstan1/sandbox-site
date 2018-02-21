@@ -1,0 +1,142 @@
+div.home-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+div.images {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+div.title {
+  animation: 0.6s ease-out 0s 1 slideInFromBottom;
+  text-align: center;
+  // background: #333;
+  font-family: 'dinmedium', sans-serif;
+  padding: 30px;
+  font-size: 50px;
+  color: white;
+}
+
+div.scroll-navigation {
+  position: absolute;
+  right: 5%;
+  text-align: right;
+  div.lineWrap {
+    cursor: pointer;
+    line-height: 35px;
+    position: relative;
+    div.text {
+      color: white;
+      transition: 0.3s ease;
+      opacity: 0;
+      display:inline-block;
+      transform: translate(10%,0);
+    }
+    div.line {
+      display:inline-block;
+      background: white;
+      margin-left: 14px;
+      height: 1px;
+      width: 15px;
+      margin-bottom: 4px;
+      transform: translate(10%,0);
+      transition: 0.9s ease !important;
+    }
+    div.overlay {
+      position: absolute;
+      top:0;
+      width:  100%;
+      height: 100%;
+    }
+    &:hover {
+      div.text {
+        opacity: 1;
+        transform: translate(0%,0);
+      }
+    }
+    &.selected{
+      div.text {
+        opacity: 1;
+        transform: translate(0%,0);
+      }
+      div.line {
+        transform: translate(0%,0);
+        width: 25px;
+        transition: 0.9s ease !important;
+      }
+    }
+
+
+  }
+}
+
+div.scroll-arrow {
+    position: absolute;
+    bottom: 5%;
+    left: calc(50%);
+    transform: translate(-50%,0);
+    color: white;
+    font-family: 'dinmedium', sans-serif;
+    div {
+      position: absolute;
+      top: -55px;
+      left: calc(50% - 9px);
+      width: 19px;
+      height: 19px;
+      border-left: 3px solid white;
+      border-bottom: 3px solid white;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg) ;
+      -webkit-animation: arrow 2s infinite;
+      animation: arrow 2s infinite;
+      box-sizing: border-box;
+    }
+  }
+
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+
+@-webkit-keyframes arrow {
+  0% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+    opacity: 0;
+  }
+  10% { opacity: 1;}
+  50% { opacity: 1;}
+  90% { opacity: 1;}
+  100% {
+    -webkit-transform: rotate(-45deg) translate(-20px, 20px);
+    opacity: 0;
+  }
+}
+@keyframes arrow {
+  0% {
+    transform: rotate(-45deg) translate(0, 0);
+    opacity: 0;
+  }
+  10% { opacity: 1;}
+  50% { opacity: 1;}
+  90% { opacity: 1;}
+  100% {
+    transform: rotate(-45deg) translate(-20px, 20px);
+    opacity: 0;
+  }
+}
