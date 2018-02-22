@@ -41,7 +41,6 @@ div.scroll-navigation {
       height: 1px;
       width: 15px;
       margin-bottom: 4px;
-      transform: translate(10%, 0);
       transition: 0.9s ease !important; }
     div.scroll-navigation div.lineWrap div.overlay {
       position: absolute;
@@ -51,11 +50,7 @@ div.scroll-navigation {
     div.scroll-navigation div.lineWrap:hover div.text {
       opacity: 1;
       transform: translate(0%, 0); }
-    div.scroll-navigation div.lineWrap.selected div.text {
-      opacity: 1;
-      transform: translate(0%, 0); }
     div.scroll-navigation div.lineWrap.selected div.line {
-      transform: translate(0%, 0);
       width: 25px;
       transition: 0.9s ease !important; }
 

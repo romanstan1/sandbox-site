@@ -46,7 +46,7 @@ div.scroll-navigation {
       height: 1px;
       width: 15px;
       margin-bottom: 4px;
-      transform: translate(10%,0);
+      // transform: translate(10%,0);
       transition: 0.9s ease !important;
     }
     div.overlay {
@@ -62,12 +62,12 @@ div.scroll-navigation {
       }
     }
     &.selected{
-      div.text {
-        opacity: 1;
-        transform: translate(0%,0);
-      }
+      // div.text {
+      //   opacity: 1;
+      //   transform: translate(0%,0);
+      // }
       div.line {
-        transform: translate(0%,0);
+        // transform: translate(0%,0);
         width: 25px;
         transition: 0.9s ease !important;
       }
