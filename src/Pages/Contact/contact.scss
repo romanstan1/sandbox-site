@@ -1,4 +1,5 @@
-
+$background:#1f1a25;
+$hovercolor:#5000ff;
 
 div.contact-content {
   padding-top: 70px;
@@ -12,11 +13,14 @@ div.contact-content {
   align-items: center;
   text-align: center;
   flex-direction: column;
+  animation: 0.6s ease-out 0s 1 slideInFromBottomContact;
+  max-width: 900px;
 }
 
 div.about {
   p {
-    font-size:30px;
+    font-size:32px;
+    line-height: 48px;
     color: white;
     text-align: left;
   }
@@ -30,15 +34,85 @@ div.details {
   flex-direction: row;
   justify-content: space-between;
   align-items:flex-start;
+  width: 100%;
   div {
-    font-size:20px;
+    font-size:19px;
     color: white;
     text-align: left;
     // background: red;
-    width: 22%;
-    a {
+    width: 28%;
+    h3 {
+      text-transform: uppercase;
+      font-size: 15px;
+      letter-spacing: 4px;
+      color: grey;
+      font-weight: 300;
+      padding-bottom: 25px;
+    }
+    a,p {
       text-decoration: none;
       color: inherit;
+    }
+  }
+}
+
+
+@keyframes slideInFromBottomContact {
+  0% {
+    transform: translateY(10%);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+@media (max-width:1100px) {
+  div.contact-content {
+    padding-top: 70px;
+    display: block;
+    width: 70%;
+    height:auto;
+    overflow-y: scroll;
+    position: relative;
+    margin: 0 auto;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    max-width: 900px;
+  }
+
+  div.details {
+    padding-top: 70px;
+    color: white;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:flex-start;
+    width: 100%;
+    div {
+      font-size:19px;
+      color: white;
+      text-align: left;
+      // background: red;
+      width: 28%;
+      h3 {
+        text-transform: uppercase;
+        font-size: 15px;
+        letter-spacing: 4px;
+        color: grey;
+        font-weight: 300;
+        padding-bottom: 25px;
+      }
+      a,p {
+        text-decoration: none;
+        color: inherit;
+      }
     }
   }
 }

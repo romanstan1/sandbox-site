@@ -1,5 +1,5 @@
 $greyBackground:#182023;
-$greyBackground:grey;
+$greyBackground:#1f1a25;
 
 html {
   overflow: hidden;
@@ -25,9 +25,13 @@ body {
 div#root {
   height: 100%;
   width: 100%;
-  > div {
+  > span {
     height: 100%;
     width: 100%;
+    > div {
+      height: 100%;
+      width: 100%;
+    }
   }
 }
 

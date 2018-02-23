@@ -5,25 +5,148 @@ div.home-content {
   justify-content: center;
   align-content: center;
   align-items: center;
-  text-align: center; }
+  text-align: center;
+  position: relative;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+  div.home-content div.overlayBlend {
+    mix-blend-mode: difference;
+    position: absolute;
+    background: #1f1a25;
+    top: 0;
+    opacity: 1;
+    width: 100%;
+    height: 100%; }
+  div.home-content div.secondOverlayBlend {
+    mix-blend-mode: color-burn;
+    position: absolute;
+    background: red;
+    top: 0;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%; }
+
+div.loading-screen {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#9198e5, #5000ff);
+  z-index: 105;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  color: white;
+  transition: 1s ease;
+  font-size: 40px;
+  opacity: 1;
+  -webkit-clip-path: url(#wave);
+  clip-path: url(#wave);
+  clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%); }
+  div.loading-screen.on {
+    animation: 2s ease-out 0s 1 loadingOverlay; }
 
 div.images {
   display: flex;
   flex-direction: column;
   max-width: 400px; }
 
+.draw-border {
+  box-shadow: inset 0 0 0 1px #5000ff;
+  color: #5000ff;
+  transition: color 0.25s 0.08333s;
+  position: relative; }
+  .draw-border::before, .draw-border::after {
+    border: 0 solid transparent;
+    box-sizing: border-box;
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: 0; }
+  .draw-border::before {
+    border-bottom-width: 1px;
+    border-left-width: 1px; }
+  .draw-border::after {
+    border-top-width: 1px;
+    border-right-width: 1px; }
+  .draw-border:hover {
+    color: white; }
+    .draw-border:hover::before, .draw-border:hover::after {
+      border-color: white;
+      transition: border-color 0s, width 0.25s, height 0.25s;
+      width: 100%;
+      height: 100%; }
+    .draw-border:hover::before {
+      transition-delay: 0s, 0s, 0.25s; }
+    .draw-border:hover::after {
+      transition-delay: 0s, 0.25s, 0s; }
+
+canvas.scene {
+  position: absolute;
+  width: 100%;
+  height: 100%; }
+
+div.part-of-unipro {
+  position: absolute;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  bottom: 6%;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
+  div.part-of-unipro span {
+    display: inline-block;
+    padding-right: 15px; }
+  div.part-of-unipro a {
+    font-size: 0px;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    height: 40px;
+    width: 100px; }
+    div.part-of-unipro a div#Logo {
+      font-size: 0px; }
+      div.part-of-unipro a div#Logo svg {
+        fill: white; }
+
 div.title {
   animation: 0.6s ease-out 0s 1 slideInFromBottom;
   text-align: center;
   font-family: 'dinmedium', sans-serif;
-  padding: 30px;
+  font-weight: 500;
+  padding: 30px 0;
+  width: 70%;
   font-size: 50px;
-  color: white; }
+  color: white;
+  z-index: 10; }
+  div.title span.blog-link {
+    padding-top: 45px;
+    display: block; }
+    div.title span.blog-link a {
+      text-decoration: none;
+      font-size: 20px;
+      text-transform: uppercase;
+      font-weight: 300;
+      letter-spacing: 4px;
+      font-family: 'dinlight', sans-serif;
+      padding: 12px 35px; }
 
 div.scroll-navigation {
   position: absolute;
-  right: 5%;
-  text-align: right; }
+  left: 5%;
+  bottom: 5%;
+  text-align: left;
+  z-index: 20; }
   div.scroll-navigation div.lineWrap {
     cursor: pointer;
     line-height: 35px;
@@ -33,15 +156,15 @@ div.scroll-navigation {
       transition: 0.3s ease;
       opacity: 0;
       display: inline-block;
-      transform: translate(10%, 0); }
+      transform: translate(-5px, 0); }
     div.scroll-navigation div.lineWrap div.line {
       display: inline-block;
       background: white;
-      margin-left: 14px;
+      margin-right: 20px;
       height: 1px;
       width: 15px;
       margin-bottom: 4px;
-      transition: 0.9s ease !important; }
+      transition: 0.2s ease; }
     div.scroll-navigation div.lineWrap div.overlay {
       position: absolute;
       top: 0;
@@ -51,16 +174,14 @@ div.scroll-navigation {
       opacity: 1;
       transform: translate(0%, 0); }
     div.scroll-navigation div.lineWrap.selected div.line {
-      width: 25px;
-      transition: 0.9s ease !important; }
+      width: 25px; }
 
 div.scroll-arrow {
   position: absolute;
   bottom: 5%;
   left: calc(50%);
   transform: translate(-50%, 0);
-  color: white;
-  font-family: 'dinmedium', sans-serif; }
+  color: white; }
   div.scroll-arrow div {
     position: absolute;
     top: -55px;
@@ -77,10 +198,25 @@ div.scroll-arrow {
 
 @keyframes slideInFromBottom {
   0% {
-    transform: translateY(100%);
+    transform: translateY(20%);
     opacity: 0.2; }
   100% {
     transform: translateY(0);
+    opacity: 1; } }
+
+@keyframes loadingOverlay {
+  0% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%); }
+  20% {
+    opacity: 1;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 0% 20%); }
+  50% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    opacity: 1; }
+  80% {
+    clip-path: polygon(0% 30%, 100% 5%, 100% 100%, 0% 100%); }
+  100% {
+    clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
     opacity: 1; } }
 
 @-webkit-keyframes arrow {

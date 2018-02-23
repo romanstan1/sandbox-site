@@ -1,7 +1,7 @@
 
-export const selectNav = (selected) => {
+export const selectChapter = (selectedChapter) => {
   return dispatch => dispatch({
-    type: 'SELECT_NAV',
-    payload: selected
+    type: 'SELECT_CHAPTER',
+    payload: selectedChapter
   })
 }

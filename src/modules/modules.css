@@ -7,11 +7,15 @@ nav {
   height: 40px;
   line-height: 40px;
   flex-direction: row;
-  justify-content: space-between; }
+  justify-content: space-between;
+  z-index: 100;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 4px; }
   nav div {
     display: inline-block; }
   nav div.other a {
-    font-size: 16px;
+    font-size: 15px;
     color: white;
     text-decoration: none; }
 
@@ -19,7 +23,8 @@ div.logo {
   z-index: 2000;
   display: inline-block;
   position: relative;
-  text-align: left; }
+  text-align: left;
+  font-family: 'dinlight', sans-serif; }
   div.logo a {
     font-size: 16px;
     padding: 2px 0px; }

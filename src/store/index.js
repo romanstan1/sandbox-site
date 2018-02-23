@@ -10,7 +10,7 @@ const enhancers = []
 
 const logger = store => next => action => {
   let result = next(action)
-  console.log('STORE STATE:', store.getState(), action)
+  // console.log('STORE STATE:', store.getState(), action)
   // if(action.type !== 'LOAD_BLOG_POSTS') window.scrollTo(0, 0)
   return result
 }
