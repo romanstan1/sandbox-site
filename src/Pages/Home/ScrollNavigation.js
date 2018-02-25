@@ -11,7 +11,7 @@ class ScrollNavigation extends Component {
     const {selectedChapter,blogPosts} = this.props
     return (
       <div className="scroll-navigation">
-        <Line handleSelect={this.handleSelect} selectedChapter={selectedChapter} tag='home' text='Home'/>
+        <Line handleSelect={this.handleSelect} selectedChapter={selectedChapter} tag={0} text='Home'/>
         { blogPosts.map((post,i) =>
           <Line selectedChapter={selectedChapter}
             handleSelect={this.handleSelect} key={i} tag={post.tag} text={post.title}/>

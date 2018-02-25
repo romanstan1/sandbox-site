@@ -19,18 +19,10 @@ const LoadingScreen = ({loading}) =>
 </div>
 
 
-var scrollValue = 0;
-var scrollIncrement = 1
-var wheeling;
-var threshold = 10
-
-
 class HomeContent extends Component {
-
   shouldComponentUpdate(next) {
     return next.shouldComponentUpdate
   }
-
   render() {
     const {imgSrc, titleText} = this.props
     return(
@@ -62,6 +54,14 @@ class Background extends Component {
 }
 
 
+
+var scrollValue = 0;
+var scrollIncrement = 1
+var wheeling;
+var upperThreshold = 10
+var lowerThreshold = -10
+
+
 class Home extends Component {
   state = {
     loading: false,
@@ -78,8 +78,19 @@ class Home extends Component {
   nextBlogPost = () => {
     scrollIncrement = 0
     scrollValue = 0
-    // this.setState({chapter: this.state.chapter + 1 })
+      console.log("nextBlogPost",this.props.selectedChapter)
     this.props.dispatch(selectChapter(this.props.selectedChapter + 1))
+    // if(this.state.chapter < storyText.length - 1) this.setState({chapter: this.state.chapter + 1 })
+    // else {
+    //   this.setState({chapter: 0})
+    //   // this.props.history.push('/about')
+    // }
+  }
+  previousBlogPost = () => {
+    scrollIncrement = 0
+    scrollValue = 0
+    console.log("previousBlogPost",this.props.selectedChapter)
+    this.props.dispatch(selectChapter(this.props.selectedChapter - 1))
     // if(this.state.chapter < storyText.length - 1) this.setState({chapter: this.state.chapter + 1 })
     // else {
     //   this.setState({chapter: 0})
@@ -88,21 +99,37 @@ class Home extends Component {
   }
 
   onWheel = (e) => {
+
     clearTimeout(wheeling);
      wheeling = setTimeout(() => {
        wheeling = undefined;
        scrollValue = 0
-       threshold = 10
+       upperThreshold = 10
+       lowerThreshold = -10
      }, 200);
-    scrollValue = scrollValue + scrollIncrement;
-    if(scrollValue > threshold) {
+
+    if (e.deltaY < 0) {
+      scrollValue = scrollValue + scrollIncrement;
+    } else if (e.deltaY > 0) {
+      scrollValue = scrollValue - scrollIncrement;
+    }
+
+    if(scrollValue > upperThreshold) {
       this.nextBlogPost()
-      threshold = 50
+      upperThreshold = 50
+      setTimeout(() => {
+        scrollIncrement = 1
+        scrollValue = 0
+      }, 400);
+    } else if(scrollValue < lowerThreshold) {
+      this.previousBlogPost()
+      lowerThreshold = -50
       setTimeout(() => {
         scrollIncrement = 1
         scrollValue = 0
       }, 400);
     }
+
   }
 
   componentDidUpdate(oldProps,oldState){

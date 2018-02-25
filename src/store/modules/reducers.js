@@ -2,7 +2,7 @@
 const assets = (ctx => ctx.keys().map(ctx))(require.context('../../assets', true, /.*/))
 
 const initialState = {
-  selectedChapter: 'home',
+  selectedChapter: 0,
   blogPosts: [
     {
       tag: 1,
