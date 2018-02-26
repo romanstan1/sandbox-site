@@ -1,5 +1,6 @@
 $greyBackground:#182023;
 $greyBackground:#1f1a25;
+$background:#17252a;
 
 html {
   overflow: hidden;
@@ -19,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'dinlight', sans-serif;
-  background: $greyBackground;
+  background: $background;
   height: 100%;
   width: 100%;
 }

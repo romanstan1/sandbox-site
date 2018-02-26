@@ -5,7 +5,7 @@ import ScrollNavigation from './ScrollNavigation.js'
 import UniproLogo from '../../modules/UniproLogo'
 import './home.css'
 import {connect} from 'react-redux'
-import {init,stopAnimation} from './background/background.js'
+import {init} from './background/background.js'
 import {selectChapter} from '../../store/modules/actions'
 
 const ScrollArrow = () =>
@@ -31,8 +31,8 @@ class HomeContent extends Component {
         style={!!imgSrc? {backgroundImage: `url(${imgSrc})`}: null}>
         <Title titleText={titleText} />
         <Background />
-        <div className='overlayBlend'></div>
-        <div className='secondOverlayBlend'></div>
+        <div className={imgSrc?'overlayBlend':null}></div>
+        <div className={imgSrc?'secondOverlayBlend':null}></div>
         <ScrollNavigation/>
         <div className='part-of-unipro'>
           <span>Part of</span>
@@ -49,7 +49,7 @@ class Background extends Component {
     return false;
   }
   render() {
-    return <canvas className="scene scene--full" id="scene"></canvas>
+    return <div className="scene scene--full" id="scene"></div>
   }
 }
 
@@ -72,14 +72,15 @@ class Home extends Component {
     // init()
   }
   componentWillUnmount() {
-    stopAnimation()
+    // stopAnimation()
   }
 
   nextBlogPost = () => {
     scrollIncrement = 0
     scrollValue = 0
-      console.log("nextBlogPost",this.props.selectedChapter)
-    this.props.dispatch(selectChapter(this.props.selectedChapter + 1))
+
+    if(this.props.selectedChapter < 5) this.props.dispatch(selectChapter(this.props.selectedChapter + 1))
+    else this.props.dispatch(selectChapter(0))
     // if(this.state.chapter < storyText.length - 1) this.setState({chapter: this.state.chapter + 1 })
     // else {
     //   this.setState({chapter: 0})
@@ -89,8 +90,8 @@ class Home extends Component {
   previousBlogPost = () => {
     scrollIncrement = 0
     scrollValue = 0
-    console.log("previousBlogPost",this.props.selectedChapter)
-    this.props.dispatch(selectChapter(this.props.selectedChapter - 1))
+    if(this.props.selectedChapter > 0) this.props.dispatch(selectChapter(this.props.selectedChapter - 1))
+    else  this.props.dispatch(selectChapter(5))
     // if(this.state.chapter < storyText.length - 1) this.setState({chapter: this.state.chapter + 1 })
     // else {
     //   this.setState({chapter: 0})
@@ -135,8 +136,8 @@ class Home extends Component {
   componentDidUpdate(oldProps,oldState){
     if(!this.state.loading && !oldState.loading){
       this.setState({loading:true, midLoad: false})
-      setTimeout(()=>this.setState({midLoad: true}), 1000)
-      setTimeout(()=>this.setState({loading: false, midLoad: false}), 2000)
+      setTimeout(()=>this.setState({midLoad: true}), 500)
+      setTimeout(()=>this.setState({loading: false, midLoad: false}), 1000)
     }
   }
 

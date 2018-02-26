@@ -1,6 +1,8 @@
 $background:#1f1a25;
 
 $hovercolor:#5000ff;
+$hovercolor:#10e7dc;
+$background:#553d67;
 
 
 div.home-content {
@@ -33,9 +35,9 @@ div.home-content {
     height: 100%;
   }
   div.secondOverlayBlend {
-    mix-blend-mode:color-burn;
+    mix-blend-mode:exclusion;
     position:absolute;
-    background: red;
+    background: $background;
     top: 0;
     opacity: 0.5;
     width: 100%;
@@ -58,14 +60,14 @@ div.loading-screen {
   transition: 1s ease;
   font-size: 40px;
   opacity: 1;
-  -webkit-clip-path: url(#wave);
-          clip-path: url(#wave);
+  // -webkit-clip-path: url(#wave);
+  //         clip-path: url(#wave);
   // overflow: hidden;
 
   // clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%);
   clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%);
   &.on {
-    animation: 2s ease-out 0s 1 loadingOverlay;
+    animation: 1s ease-out 0s 1 loadingOverlay;
   }
   // &.off {
   //
@@ -129,10 +131,18 @@ div.images {
   @include btn-border-drawing($hovercolor, white, 1px, bottom, right);
 }
 
-canvas.scene {
+div.scene {
   position: absolute;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
+  // z-index: -1;
+  // display: none;
+  canvas {
+    background: none;
+    opacity: 0.5;
+  }
 }
 
 div.part-of-unipro {
@@ -282,16 +292,14 @@ div.scroll-arrow {
   0% {
     clip-path: polygon(0% 0%,100% 0%,100% 0%, 0% 0%);
   }
-  20% {
-    opacity: 1;
-    clip-path: polygon(0% 0%,100% 0%,100% 70%, 0% 20%);
+  30% {
+    clip-path: polygon(0% 0%,100% 0%,100% 100%, 0% 100%);
   }
   50% {
     clip-path: polygon(0% 0%,100% 0%,100% 100%, 0% 100%);
-    opacity: 1;
   }
   80% {
-    clip-path: polygon(0% 30%,100% 5%,100% 100%, 0% 100%);
+    clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%);
     // opacity: 1;
     // -webkit-clip-path: url(#wave);
     //         clip-path: url(#wave);
@@ -330,5 +338,16 @@ div.scroll-arrow {
   100% {
     transform: rotate(-45deg) translate(-20px, 20px);
     opacity: 0;
+  }
+}
+
+
+@media (max-width:780px) {
+  div.scroll-navigation {
+    display: none;
+  }
+  div.title {
+    width: 90%;
+    font-size: 38px;
   }
 }

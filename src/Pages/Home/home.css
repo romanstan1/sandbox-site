@@ -17,15 +17,15 @@ div.home-content {
   div.home-content div.overlayBlend {
     mix-blend-mode: difference;
     position: absolute;
-    background: #1f1a25;
+    background: #553d67;
     top: 0;
     opacity: 1;
     width: 100%;
     height: 100%; }
   div.home-content div.secondOverlayBlend {
-    mix-blend-mode: color-burn;
+    mix-blend-mode: exclusion;
     position: absolute;
-    background: red;
+    background: #553d67;
     top: 0;
     opacity: 0.5;
     width: 100%;
@@ -36,7 +36,7 @@ div.loading-screen {
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(#9198e5, #5000ff);
+  background: linear-gradient(#9198e5, #10e7dc);
   z-index: 105;
   opacity: 0;
   display: flex;
@@ -45,11 +45,9 @@ div.loading-screen {
   transition: 1s ease;
   font-size: 40px;
   opacity: 1;
-  -webkit-clip-path: url(#wave);
-  clip-path: url(#wave);
   clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%); }
   div.loading-screen.on {
-    animation: 2s ease-out 0s 1 loadingOverlay; }
+    animation: 1s ease-out 0s 1 loadingOverlay; }
 
 div.images {
   display: flex;
@@ -57,8 +55,8 @@ div.images {
   max-width: 400px; }
 
 .draw-border {
-  box-shadow: inset 0 0 0 1px #5000ff;
-  color: #5000ff;
+  box-shadow: inset 0 0 0 1px #10e7dc;
+  color: #10e7dc;
   transition: color 0.25s 0.08333s;
   position: relative; }
   .draw-border::before, .draw-border::after {
@@ -89,10 +87,15 @@ div.images {
     .draw-border:hover::after {
       transition-delay: 0s, 0.25s, 0s; }
 
-canvas.scene {
+div.scene {
   position: absolute;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  top: 0;
+  left: 0; }
+  div.scene canvas {
+    background: none;
+    opacity: 0.5; }
 
 div.part-of-unipro {
   position: absolute;
@@ -207,14 +210,12 @@ div.scroll-arrow {
 @keyframes loadingOverlay {
   0% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%); }
-  20% {
-    opacity: 1;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 0% 20%); }
+  30% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
   50% {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    opacity: 1; }
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
   80% {
-    clip-path: polygon(0% 30%, 100% 5%, 100% 100%, 0% 100%); }
+    clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%); }
   100% {
     clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
     opacity: 1; } }
@@ -246,3 +247,10 @@ div.scroll-arrow {
   100% {
     transform: rotate(-45deg) translate(-20px, 20px);
     opacity: 0; } }
+
+@media (max-width: 780px) {
+  div.scroll-navigation {
+    display: none; }
+  div.title {
+    width: 90%;
+    font-size: 38px; } }

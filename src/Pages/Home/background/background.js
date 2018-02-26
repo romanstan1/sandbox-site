@@ -1,114 +1,83 @@
 import * as THREE from 'three'
 
-import {TweenMax, Power1} from "gsap";
-import np from './perlin'
+var camera, scene, renderer,
+    geometry, material, mesh, clock, cubeSineDriver,
+    textGeo, textTexture, textMaterial, text, light, smokeTexture, smokeMaterial, smokeParticles, smokeGeo, delta;
 
-var controls, canvas, width, height, renderer, scene, camera, light, light2, geometry, material, shape, mouse, resizeTm, frameRequest
 
-export function init () {
+export function init() {
 
-    canvas = document.querySelector('#scene');
-    width = canvas.offsetWidth;
-    height = canvas.offsetHeight;
+    clock = new THREE.Clock();
 
-    renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: true
-    });
-    renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
-    renderer.setSize(width, height);
-    // renderer.setClearColor(0xA9E7DA);
-    // renderer.setClearColor(0x322bff);
-    // renderer.setClearColor(0xf64c72);
-    // renderer.setClearColor(0x2f2fa2);
-    // renderer.setClearColor(0x2962ff); // the blue
+    renderer = new THREE.WebGLRenderer({alpha: true});
+    renderer.setSize( window.innerWidth, window.innerHeight );
 
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 10000);
-    camera.position.set(220, 0, 300);
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+    camera.position.z = 1000;
+    scene.add( camera );
 
-    light = new THREE.HemisphereLight(0xffffff, 0x0C056D, 0.6);
-    // light = new THREE.HemisphereLight(0xffffff, 0xf64c72, 0.6);
+    geometry = new THREE.CubeGeometry( 200, 200, 200 );
+    material = new THREE.MeshLambertMaterial( { color: 0xaa6666, wireframe: false } );
+    mesh = new THREE.Mesh( geometry, material );
+    //scene.add( mesh );
+    cubeSineDriver = 0;
+
+    textGeo = new THREE.PlaneGeometry(300,300);
+    THREE.ImageUtils.crossOrigin = ''; //Need this to pull in crossdomain images from AWS
+    textTexture = THREE.ImageUtils.loadTexture('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/quickText.png');
+    textMaterial = new THREE.MeshLambertMaterial({color: 0x00ffff, opacity: 1, map: textTexture, transparent: true, blending: THREE.AdditiveBlending})
+    text = new THREE.Mesh(textGeo,textMaterial);
+    text.position.z = 800;
+    // scene.add(text);
+
+    light = new THREE.DirectionalLight(0xffffff,0.5);
+    light.position.set(-1,0,1);
     scene.add(light);
 
-    // light = new THREE.DirectionalLight(0xf64c72, 0.7);
-    light = new THREE.DirectionalLight(0x590D82, 0.7);
-    light.position.set(200, 300, 400);
-    scene.add(light);
-    light2 = light.clone();
-    light2.position.set(-200, 300, 400);
-    scene.add(light2);
+    smokeTexture = THREE.ImageUtils.loadTexture('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/Smoke-Element.png');
+    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xbdc1c1, map: smokeTexture, transparent: true});
+    smokeGeo = new THREE.PlaneGeometry(300,300);
+    smokeParticles = [];
 
-    geometry = new THREE.IcosahedronGeometry(150, 5);
-    for(var i = 0; i < geometry.vertices.length; i++) {
-        var vector = geometry.vertices[i];
-        vector._o = vector.clone();
-    }
-     material = new THREE.MeshPhongMaterial({
-        // emissive: 0x23f660,
-        // emissive: 0x4286f4,
-        emissive: 0x38d0ff,
-        // emissive: 0xf64c72,
-        // emissive: 0x322bff,
-        emissiveIntensity: 0.4,
-        shininess: 0
-    });
-    shape = new THREE.Mesh(geometry, material);
-    scene.add(shape);
 
-    mouse = new THREE.Vector2(0.8, 0.5);
-    function onMouseMove(e) {
-        // console.log("e",e.clientY, e.clientX)
-        TweenMax.to(mouse, 0.8, {
-            y: (e.clientY / height),
-            x : (e.clientX / width),
-            ease: Power1.easeOut
-        });
+    for (var p = 0; p < 150; p++) {
+        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
+        particle.position.set(Math.random()*500-250,Math.random()*500-250,Math.random()*1000-100);
+        particle.rotation.z = Math.random() * 360;
+        scene.add(particle);
+        smokeParticles.push(particle);
     }
 
-    requestAnimationFrame(render);
-    window.addEventListener("mousemove", onMouseMove);
-    resizeTm;
-    window.addEventListener("resize", function(){
-        resizeTm = clearTimeout(resizeTm);
-        resizeTm = setTimeout(onResize, 200);
-    });
+    document.getElementById('scene').appendChild( renderer.domElement );
+
+    // document.body.appendChild( renderer.domElement );
+    animate();
 }
 
-function updateVertices (a) {
-    for(var i = 0; i < geometry.vertices.length; i++) {
-        var vector = geometry.vertices[i];
-        vector.copy(vector._o);
+function animate() {
 
-        var perlin = np.noise.simplex3(
-            (vector.x * 0.006) + (a * 0.0002),
-            (vector.y * 0.006) + (a * 0.0003),
-            (vector.z * 0.006)
-        );
-        var ratio = ((perlin*0.4 * (mouse.y+0.1)) + 0.8);
-        vector.multiplyScalar(ratio);
+    // note: three.js includes requestAnimationFrame shim
+    delta = clock.getDelta();
+    requestAnimationFrame( animate );
+    evolveSmoke();
+    render();
+}
+
+function evolveSmoke() {
+    var sp = smokeParticles.length;
+    while(sp--) {
+        smokeParticles[sp].rotation.z += (delta * 0.1);
     }
-    geometry.verticesNeedUpdate = true;
 }
 
-function render(a) {
-    // requestAnimationFrame(render);
-    frameRequest = requestAnimationFrame( render )
-    updateVertices(a);
-    renderer.render(scene, camera);
-}
+function render() {
 
-function onResize() {
-    canvas.style.width = '';
-    canvas.style.height = '';
-    width = canvas.offsetWidth;
-    height = canvas.offsetHeight;
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(width, height);
-}
+    mesh.rotation.x += 0.005;
+    mesh.rotation.y += 0.01;
+    cubeSineDriver += .01;
+    mesh.position.z = 100 + (Math.sin(cubeSineDriver) * 500);
+    renderer.render( scene, camera );
 
-export function stopAnimation() {
-    cancelAnimationFrame(frameRequest)
 }
