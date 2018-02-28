@@ -118,6 +118,8 @@ class Home extends Component {
 
   onWheel = (e) => {
 
+    console.log("onWheel")
+
     clearTimeout(wheeling);
      wheeling = setTimeout(() => {
        wheeling = undefined;
