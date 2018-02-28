@@ -2,7 +2,7 @@ $background:#1f1a25;
 $hovercolor: #3f00ff;
 $secondaryColor: #3f00ff;
 $buttonColor: #00fff6; // lime button
-
+$grey: #778399;
 
 
 div.contact-content {
@@ -57,12 +57,7 @@ div.details {
       text-transform: uppercase;
       font-size: 16px;
       letter-spacing: 3px;
-      color: #c9d2e2;
-      // color: #66748c;
-      color: #667faa;
-      color: #778399; //
-      // color: #597a7f;
-      // color: #aeeeff;
+      color: $grey;
       font-weight: 300;
       padding-bottom: 25px;
       line-height: 22px;

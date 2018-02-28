@@ -223,6 +223,17 @@ div.scroll-arrow {
     animation: arrow 2s infinite;
     box-sizing: border-box; }
 
+div#sphere {
+  background: #778399;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  z-index: 5;
+  transform: translate(-50%, -50%); }
+
 @keyframes slideInFromBottom {
   0% {
     transform: translateY(20%);

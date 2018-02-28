@@ -55,7 +55,10 @@ class Background extends Component {
     return false;
   }
   render() {
-    return <div className="scene scene--full" id="container"></div>
+    return [
+      <div key='scene' className="scene scene--full" id="container"></div>,
+      <div key='sphere' id="sphere"></div>
+    ]
   }
 }
 
@@ -118,7 +121,7 @@ class Home extends Component {
 
   onWheel = (e) => {
 
-    console.log("onWheel")
+    // console.log("onWheel")
 
     clearTimeout(wheeling);
      wheeling = setTimeout(() => {

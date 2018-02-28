@@ -1,28 +1,15 @@
-$background:#1f1a25;
-
-$hovercolor:#5000ff;
-$hovercolor:#10e7dc;
 $background:#553d67;
 $greyBackground:#17252a;
-// $greyBackground:#000238;
-$hovercolor: #F6511D;
 
 
 
-// option1 ---------------------------
-
-$hovercolor: #d83f87;
-$secondaryColor: #00cc9f;
-$buttonColor: #d83f87;
+$grey: #778399;
 
 
 // option2 ---------------------------
 
 $hovercolor: #3f00ff;
-$secondaryColor: #f79e02;
 $secondaryColor: #3f00ff;
-$buttonColor: #f79e02; // oranger button
-$buttonColor: #ff3b00; // redder button
 $buttonColor: #00fff6; // lime button
 
 
@@ -370,6 +357,17 @@ div.scroll-arrow {
   }
 }
 
+div#sphere {
+  background: $grey;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+}
 
 
 @keyframes slideInFromBottom {
