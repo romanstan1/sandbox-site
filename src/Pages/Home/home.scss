@@ -3,6 +3,30 @@ $background:#1f1a25;
 $hovercolor:#5000ff;
 $hovercolor:#10e7dc;
 $background:#553d67;
+$greyBackground:#17252a;
+// $greyBackground:#000238;
+$hovercolor: #F6511D;
+
+
+
+// option1 ---------------------------
+
+$hovercolor: #d83f87;
+$secondaryColor: #00cc9f;
+$buttonColor: #d83f87;
+
+
+// option2 ---------------------------
+
+$hovercolor: #3f00ff;
+$secondaryColor: #f79e02;
+$secondaryColor: #3f00ff;
+$buttonColor: #f79e02; // oranger button
+$buttonColor: #ff3b00; // redder button
+$buttonColor: #00fff6; // lime button
+
+
+
 
 
 div.home-content {
@@ -26,22 +50,34 @@ div.home-content {
   background-size: cover;
   // z-index: -2;
   div.overlayBlend {
-    mix-blend-mode: difference;
     position:absolute;
-    background: $background;
+    background: $secondaryColor;
     top: 0;
-    opacity: 1;
     width: 100%;
     height: 100%;
+     /////////
+    mix-blend-mode:darken;
+    // mix-blend-mode:color-dodge; // look at
+    opacity: 0.6;
+
+    // display: none;
   }
   div.secondOverlayBlend {
-    mix-blend-mode:exclusion;
     position:absolute;
-    background: $background;
+    background: $hovercolor;
     top: 0;
-    opacity: 0.5;
     width: 100%;
     height: 100%;
+    ///////// option1
+    mix-blend-mode:luminosity;
+    // mix-blend-mode:difference;
+    opacity: 0.5;
+
+    // option2
+    mix-blend-mode:difference;
+    opacity: 0.9;
+
+    // display: none;
   }
 }
 
@@ -50,7 +86,9 @@ div.loading-screen {
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(#9198e5, $hovercolor);
+  background: linear-gradient( #00cc9f,$hovercolor);
+  background: linear-gradient($hovercolor, $buttonColor);
+  // background: linear-gradient($greyBackground, #9198e5);
   z-index: 105;
   opacity: 0;
   display: flex;
@@ -60,75 +98,83 @@ div.loading-screen {
   transition: 1s ease;
   font-size: 40px;
   opacity: 1;
+  bottom: 0;
+  // animation: 2s ease-out 0s infinite myWaveAnimation;
+  // transform: rotate(180deg) translateY(0px);
+
   // -webkit-clip-path: url(#wave);
   //         clip-path: url(#wave);
-  // overflow: hidden;
 
+  // overflow: hidden;
   // clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%);
-  clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%);
+
+
+  clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%); // tis one
   &.on {
-    animation: 1s ease-out 0s 1 loadingOverlay;
+    animation: 1.5s ease-out 0s 1 loadingOverlay; // and tis one
   }
-  // &.off {
-  //
-  // }
   // display: none;
 }
+
+.wave {
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index: 1000;
+  background: red;
+  fill:red;
+}
+
+.wave + .wave {
+  z-index: 2;
+}
+// div.loading-screen {
+//   position: fixed;
+//   top: 0;
+//   width: 100%;
+//   height: 100%;
+//   // background: linear-gradient(#9198e5, $hovercolor);
+//   background: tomato;
+//   z-index: 105;
+//   opacity: 0;
+//   display: flex;
+//   justify-content: center;
+//   color: white;
+//   transition: 1s ease;
+//   font-size: 40px;
+//   opacity: 1;
+//   animation: 2s ease-out 0s infinite myWaveAnimation;
+//   overflow: hidden;
+//   border-radius: 50%/100% 100px 0 0;
+//   &:after {
+//     content:'';
+//     position: absolute;
+//     top:0;
+//     left: 0;
+//     width: 100%;
+//     height: 100vh;
+//     background: linear-gradient(#9198e5, $hovercolor);
+//   }
+// }
+
+@keyframes myWaveAnimation {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
 div.images {
   display: flex;
   flex-direction: column;
   max-width: 400px;
-}
-
-
-//=== Drawing effect
-
-@mixin btn-border-drawing(
-  $color: #ccc, $hover: black, $width: 1px, $vertical: top, $horizontal: left, $duration: 0.25s) {
-  box-shadow: inset 0 0 0 $width $color;
-  color: $color;
-  transition: color $duration $duration/3;
-  position: relative;
-
-  &::before,
-  &::after {
-    border: 0 solid transparent;
-    box-sizing: border-box;
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    width: 0; height: 0;
-    #{$vertical}: 0;
-    #{$horizontal}: 0;
-  }
-
-  &::before {
-    $h-side: if($horizontal == 'left', 'right', 'left');
-    border-#{$vertical}-width: $width;
-    border-#{$h-side}-width: $width;
-  }
-
-  &::after {
-    $v-side: if($vertical == 'top', 'bottom', 'top');
-    border-#{$v-side}-width: $width;
-    border-#{$horizontal}-width: $width;
-  }
-
-  &:hover {
-    color: $hover;
-    &::before,
-    &::after {
-      border-color: $hover;
-      transition: border-color 0s, width $duration, height $duration;
-      width: 100%;
-      height: 100%;
-    }
-    &::before { transition-delay: 0s, 0s, $duration; }
-    &::after { transition-delay: 0s, $duration, 0s; }
-  }
-}
-.draw-border {
-  @include btn-border-drawing($hovercolor, white, 1px, bottom, right);
 }
 
 div.scene {
@@ -137,18 +183,21 @@ div.scene {
   height: 100%;
   top: 0;
   left: 0;
-  // z-index: -1;
-  // display: none;
   canvas {
-    background: none;
-    opacity: 0.5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    // background: red;
+    // opacity: 0.7;
   }
 }
 
 div.part-of-unipro {
   position: absolute;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   bottom: 6%;
   color: white;
   display: flex;
@@ -157,47 +206,90 @@ div.part-of-unipro {
   align-items: center;
   span {
     display: inline-block;
-    padding-right: 15px;
+    padding-right: 12px;
   }
   a {
     font-size: 0px;
+    font-size: 16px;
     text-decoration: none;
     color: white;
     display: inline-block;
+      // margin-right: 53px;
     // background: red;
     height: 40px;
-    width: 100px;
+    // width: 100px;
     div#Logo {
       font-size: 0px;
       // display: inline-block;
+      // overflow: hidden;
+      //
+      // margin-top: 2px;
+      // margin-left: 2px;
+      // width: 90px;
+
+      width: 70px;
       svg {
         fill: white;
+
+        height: 27px;
+        margin-top: 7px;
+        margin-right: 62px;
+        overflow: hidden;
       }
     }
   }
 }
 
 div.title {
-  animation: 0.6s ease-out 0s 1 slideInFromBottom;
+  animation: 0.7s ease-out 0s 1 slideInFromBottom;
   text-align: center;
   font-family: 'dinmedium', sans-serif;
   font-weight: 500;
-  padding: 30px 0;
   width: 70%;
-  font-size: 50px;
   color: white;
   z-index: 10;
+  max-width: 810px;
+  h1 {
+    line-height: 74px;
+    font-size: 52px;
+    font-weight: 500;
+    padding-bottom: 20px;
+  }
   span.blog-link {
     padding-top: 45px;
     display: block;
-    a {
+    a.button {
+      position: relative;
       text-decoration: none;
-      font-size: 20px;
       text-transform: uppercase;
       font-weight: 300;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       font-family: 'dinlight', sans-serif;
+      color: $buttonColor;
       padding: 12px 35px;
+      border: 1px solid $buttonColor;
+      font-size: 14px;
+      &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 0;
+        top: 0;
+        left: 0;
+        // background: #fff;
+        background: $buttonColor;
+        transition: 0.2s ease;
+      }
+      transition: 0.2s ease;
+      &:hover {
+        color: $hovercolor;
+        border: 1px solid white;
+        border: 1px solid $buttonColor;
+        &:before {
+          z-index: -1;
+          height: 100%;
+        }
+      }
     }
   }
 }
@@ -290,28 +382,28 @@ div.scroll-arrow {
 
 @keyframes loadingOverlay {
   0% {
-    clip-path: polygon(0% 0%,100% 0%,100% 0%, 0% 0%);
+    clip-path: polygon(0% 0%, 0% 0%, 2% 0%, 2% 0%, 4% 0%, 4% 0%, 6% 0%, 6% 0%, 8% 0%, 8% 0%, 10% 0%, 10% 0%, 12% 0%, 12% 0%, 14% 0%, 14% 0%, 16% 0%, 16% 0%, 18% 0%, 18% 0%, 20% 0%, 20% 0%, 22% 0%, 22% 0%, 24% 0%, 24% 0%, 26% 0%, 26% 0%, 28% 0%, 28% 0%, 30% 0%, 30% 0%, 32% 0%, 32% 0%, 34% 0%, 34% 0%, 36% 0%, 36% 0%, 38% 0%, 38% 0%, 40% 0%, 40% 0%, 42% 0%, 42% 0%, 44% 0%, 44% 0%, 46% 0%, 46% 0%, 48% 0%, 48% 0%, 50% 0%, 50% 0%, 52% 0%, 52% 0%, 54% 0%, 54% 0%, 56% 0%, 56% 0%, 58% 0%, 58% 0%, 60% 0%, 60% 0%, 62% 0%, 62% 0%, 64% 0%, 64% 0%, 66% 0%, 66% 0%, 68% 0%, 68% 0%, 70% 0%, 70% 0%, 72% 0%, 72% 0%, 74% 0%, 74% 0%, 76% 0%, 76% 0%, 78% 0%, 78% 0%, 80% 0%, 80% 0%, 82% 0%, 82% 0%, 84% 0%, 84% 0%, 86% 0%, 86% 0%, 88% 0%, 88% 0%, 90% 0%, 90% 0%, 92% 0%, 92% 0%, 94% 0%, 94% 0%, 96% 0%, 96% 0%, 98% 0%, 98% 0%, 100% 0%, 100% 0%, 100% 0%);
   }
-  30% {
-    clip-path: polygon(0% 0%,100% 0%,100% 100%, 0% 100%);
+  12% {
+    clip-path: polygon(0% 0%, 0% 18%, 2% 18%, 2% 26%, 4% 26%, 4% 20%, 6% 20%, 6% 24%, 8% 24%, 8% 21%, 10% 21%, 10% 30%, 12% 30%, 12% 18%, 14% 18%, 14% 20%, 16% 20%, 16% 22%, 18% 22%, 18% 20%, 20% 20%, 20% 24%, 22% 24%, 22% 22%, 24% 22%, 24% 26%, 26% 26%, 26% 28%, 28% 28%, 28% 30%, 30% 30%, 30% 32%, 32% 32%, 32% 42%, 34% 42%, 34% 38%, 36% 38%, 36% 40%, 38% 40%, 38% 38%, 40% 38%, 40% 42%, 42% 42%, 42% 40%, 44% 40%, 44% 38%, 46% 38%, 46% 35%, 48% 35%, 48% 40%, 50% 40%, 50% 38%, 52% 38%, 52% 32%, 54% 32%, 54% 34%, 56% 34%, 56% 36%, 58% 36%, 58% 38%, 60% 38%, 60% 34%, 62% 34%, 62% 30%, 64% 30%, 64% 26%, 66% 26%, 66% 24%, 68% 24%, 68% 32%, 70% 32%, 70% 38%, 72% 38%, 72% 36%, 74% 36%, 74% 34%, 76% 34%, 76% 30%, 78% 30%, 78% 26%, 80% 26%, 80% 34%, 82% 34%, 82% 24%, 84% 24%, 84% 28%, 86% 28%, 86% 32%, 88% 32%, 88% 30%, 90% 30%, 90% 28%, 92% 28%, 92% 32%, 94% 32%, 94% 28%, 96% 28%, 96% 35%, 98% 35%, 98% 24%, 100% 24%, 100% 0%, 0% 0%);
   }
   50% {
-    clip-path: polygon(0% 0%,100% 0%,100% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 0% 100%, 2% 100%, 2% 100%, 4% 100%, 4% 100%, 6% 100%, 6% 100%, 8% 100%, 8% 100%, 10% 100%, 10% 100%, 12% 100%, 12% 100%, 14% 100%, 14% 100%, 16% 100%, 16% 100%, 18% 100%, 18% 100%, 20% 100%, 20% 100%, 22% 100%, 22% 100%, 24% 100%, 24% 100%, 26% 100%, 26% 100%, 28% 100%, 28% 100%, 30% 100%, 30% 100%, 32% 100%, 32% 100%, 34% 100%, 34% 100%, 36% 100%, 36% 100%, 38% 100%, 38% 100%, 40% 100%, 40% 100%, 42% 100%, 42% 100%, 44% 100%, 44% 100%, 46% 100%, 46% 100%, 48% 100%, 48% 100%, 50% 100%, 50% 100%, 52% 100%, 52% 100%, 54% 100%, 54% 100%, 56% 100%, 56% 100%, 58% 100%, 58% 100%, 60% 100%, 60% 100%, 62% 100%, 62% 100%, 64% 100%, 64% 100%, 66% 100%, 66% 100%, 68% 100%, 68% 100%, 70% 100%, 70% 100%, 72% 100%, 72% 100%, 74% 100%, 74% 100%, 76% 100%, 76% 100%, 78% 100%, 78% 100%, 80% 100%, 80% 100%, 82% 100%, 82% 100%, 84% 100%, 84% 100%, 86% 100%, 86% 100%, 88% 100%, 88% 100%, 90% 100%, 90% 100%, 92% 100%, 92% 100%, 94% 100%, 94% 100%, 96% 100%, 96% 100%, 98% 100%, 98% 100%, 100% 100%, 100% 0%, 100% 0%);
+
+    // clip-path: polygon(0% 0%, 0% 58%, 2% 58%, 2% 58%, 4% 58%, 4% 58%, 6% 58%, 6% 58%, 8% 58%, 8% 58%, 10% 58%, 10% 58%, 12% 58%, 12% 58%, 14% 58%, 14% 58%, 16% 58%, 16% 58%, 18% 58%, 18% 58%, 20% 58%, 20% 58%, 22% 58%, 22% 58%, 24% 58%, 24% 58%, 26% 58%, 26% 58%, 28% 58%, 28% 58%, 30% 58%, 30% 58%, 32% 58%, 32% 58%, 34% 58%, 34% 58%, 36% 58%, 36% 58%, 38% 58%, 38% 58%, 40% 58%, 40% 58%, 42% 58%, 42% 58%, 44% 58%, 44% 58%, 46% 58%, 46% 58%, 48% 58%, 48% 58%, 50% 58%, 50% 58%, 52% 58%, 52% 58%, 54% 58%, 54% 58%, 56% 58%, 56% 58%, 58% 58%, 58% 58%, 60% 58%, 60% 58%, 62% 58%, 62% 58%, 64% 58%, 64% 58%, 66% 58%, 66% 58%, 68% 58%, 68% 58%, 70% 58%, 70% 58%, 72% 58%, 72% 58%, 74% 58%, 74% 58%, 76% 58%, 76% 58%, 78% 58%, 78% 58%, 80% 58%, 80% 58%, 82% 58%, 82% 58%, 84% 58%, 84% 58%, 86% 58%, 86% 58%, 88% 58%, 88% 58%, 90% 58%, 90% 58%, 92% 58%, 92% 58%, 94% 58%, 94% 58%, 96% 58%, 96% 58%, 98% 58%, 98% 58%, 100% 58%, 100% 0%, 100% 0%);
   }
-  80% {
-    clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%);
-    // opacity: 1;
-    // -webkit-clip-path: url(#wave);
-    //         clip-path: url(#wave);
-  }
+
   100% {
-    clip-path: polygon(0% 100%,100% 100%,100% 100%, 0% 100%);
-    // -webkit-clip-path: url(#wave);
-    //         clip-path: url(#wave);
-    opacity: 1;
+    clip-path: polygon(0% 0%, 0% 100%, 2% 100%, 2% 100%, 4% 100%, 4% 100%, 6% 100%, 6% 100%, 8% 100%, 8% 100%, 10% 100%, 10% 100%, 12% 100%, 12% 100%, 14% 100%, 14% 100%, 16% 100%, 16% 100%, 18% 100%, 18% 100%, 20% 100%, 20% 100%, 22% 100%, 22% 100%, 24% 100%, 24% 100%, 26% 100%, 26% 100%, 28% 100%, 28% 100%, 30% 100%, 30% 100%, 32% 100%, 32% 100%, 34% 100%, 34% 100%, 36% 100%, 36% 100%, 38% 100%, 38% 100%, 40% 100%, 40% 100%, 42% 100%, 42% 100%, 44% 100%, 44% 100%, 46% 100%, 46% 100%, 48% 100%, 48% 100%, 50% 100%, 50% 100%, 52% 100%, 52% 100%, 54% 100%, 54% 100%, 56% 100%, 56% 100%, 58% 100%, 58% 100%, 60% 100%, 60% 100%, 62% 100%, 62% 100%, 64% 100%, 64% 100%, 66% 100%, 66% 100%, 68% 100%, 68% 100%, 70% 100%, 70% 100%, 72% 100%, 72% 100%, 74% 100%, 74% 100%, 76% 100%, 76% 100%, 78% 100%, 78% 100%, 80% 100%, 80% 100%, 82% 100%, 82% 100%, 84% 100%, 84% 100%, 86% 100%, 86% 100%, 88% 100%, 88% 100%, 90% 100%, 90% 100%, 92% 100%, 92% 100%, 94% 100%, 94% 100%, 96% 100%, 96% 100%, 98% 100%, 98% 100%, 100% 100%, 100% 0%, 100% 0%);
   }
 }
 
+// -webkit-clip-path: url(#wave);
+//         clip-path: url(#wave);
+// -webkit-clip-path: url(#wave);
+//         clip-path: url(#wave);
+// transform: rotate(180deg) translateY(100%);
+// opacity: 1;
 
 
 @-webkit-keyframes arrow {
@@ -342,12 +434,30 @@ div.scroll-arrow {
 }
 
 
+
+
+
 @media (max-width:780px) {
   div.scroll-navigation {
     display: none;
   }
   div.title {
     width: 90%;
-    font-size: 38px;
+    // font-size: 38px;
+    h1 {
+      line-height: 64px;
+      font-size: 42px;
+      padding-bottom: 10px;
+    }
+  }
+}
+@media (max-width:480px) {
+  div.title {
+    // width: 90%;
+    h1 {
+      line-height: 58px;
+      font-size: 38px;
+      // padding-bottom: 5px;
+    }
   }
 }

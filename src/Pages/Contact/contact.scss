@@ -1,5 +1,9 @@
 $background:#1f1a25;
-$hovercolor:#5000ff;
+$hovercolor: #3f00ff;
+$secondaryColor: #3f00ff;
+$buttonColor: #00fff6; // lime button
+
+
 
 div.contact-content {
   padding-top: 70px;
@@ -19,11 +23,16 @@ div.contact-content {
 }
 
 div.about {
+  width: 100%;
+    text-align: left;
   p {
-    font-size:32px;
-    line-height: 50px;
+    font-family: 'dinmedium', sans-serif;
+    font-size:52px;
+    font-weight: 500;
+    line-height: 90px;
     color: white;
     text-align: left;
+    white-space: nowrap;
   }
 }
 
@@ -37,22 +46,33 @@ div.details {
   align-items:flex-start;
   width: 100%;
   div {
-    font-size:19px;
+    // background: red;
+    font-size:16px;
+    line-height: 24px;
     color: white;
     text-align: left;
     // background: red;
     width: 28%;
     h3 {
       text-transform: uppercase;
-      font-size: 15px;
-      letter-spacing: 4px;
-      color: grey;
+      font-size: 16px;
+      letter-spacing: 3px;
+      color: #c9d2e2;
+      // color: #66748c;
+      color: #667faa;
+      color: #778399; //
+      // color: #597a7f;
+      // color: #aeeeff;
       font-weight: 300;
       padding-bottom: 25px;
+      line-height: 22px;
     }
     a,p {
       text-decoration: none;
       color: inherit;
+    }
+    a.callToAction {
+      color: $buttonColor;
     }
   }
 }
@@ -86,15 +106,44 @@ div.details {
     }
   }
 }
+
 @media (max-width:780px) {
   div.contact-content {
     width: 90%;
   }
-
   div.about {
     p {
-      font-size:26px;
-      line-height: 46px;
+      white-space: normal;
+      line-height: 64px;
+      // font-size: 42px; // change when copy changes
+      font-size: 38px;
+    }
+  }
+}
+
+@media (max-width:520px) { // change when copy changes
+  div.about {
+    p {
+      font-size: 34px;
+    }
+  }
+}
+
+@media (max-width:480px) {
+  div.about {
+    p {
+      line-height: 58px;
+      // font-size: 38px; // change when copy changes
+      font-size: 32px;
+    }
+  }
+}
+
+@media (max-width:410px) { // change when copy changes
+  div.about {
+    p {
+      white-space: nowrap;
+      font-size: 27px;
     }
   }
 }

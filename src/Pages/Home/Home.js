@@ -5,8 +5,13 @@ import ScrollNavigation from './ScrollNavigation.js'
 import UniproLogo from '../../modules/UniproLogo'
 import './home.css'
 import {connect} from 'react-redux'
-import {init} from './background/background.js'
+import {init, stop} from './background/background.js'
 import {selectChapter} from '../../store/modules/actions'
+// import CubeBackground from './boilerplate/CubeBackground'
+
+// import background from './background/background'
+// var $ = window.$
+
 
 const ScrollArrow = () =>
 <div className="scroll-arrow">
@@ -24,13 +29,14 @@ class HomeContent extends Component {
     return next.shouldComponentUpdate
   }
   render() {
-    const {imgSrc, titleText} = this.props
+    const {imgSrc, titleText, shouldComponentUpdate} = this.props
     return(
       <div
         className='home-content'
         style={!!imgSrc? {backgroundImage: `url(${imgSrc})`}: null}>
-        <Title titleText={titleText} />
+        <Title refresh={shouldComponentUpdate} titleText={titleText} />
         <Background />
+        {/* <CubeBackground/> */}
         <div className={imgSrc?'overlayBlend':null}></div>
         <div className={imgSrc?'secondOverlayBlend':null}></div>
         <ScrollNavigation/>
@@ -49,7 +55,7 @@ class Background extends Component {
     return false;
   }
   render() {
-    return <div className="scene scene--full" id="scene"></div>
+    return <div className="scene scene--full" id="container"></div>
   }
 }
 
@@ -69,34 +75,45 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // init()
+    // this.stopStartAnimation(this, nextProps)
+
+    // $('#feel-the-wave-two').wavify({
+    //   height: 0,
+    //   bones: 3,
+    //   amplitude: 100,
+    //   color: 'rgba(150, 97, 255, .8)',
+    //   speed: 0.2
+    // });
+    if(this.props.selectedChapter === 0) init()
   }
   componentWillUnmount() {
     // stopAnimation()
+    stop()
   }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.selectedChapter === 0) init('delay')
+    else if(this.props.selectedChapter === 0) stop(750)
+
+    // setTimeout((nextProps, context) => {
+    //   console.log("context",context)
+    //   if(nextProps && nextProps.selectedChapter === 0) init()
+    //   else if(context.props.selectedChapter === 0) stop()
+    // }, 750)
+  }
+
 
   nextBlogPost = () => {
     scrollIncrement = 0
     scrollValue = 0
-
     if(this.props.selectedChapter < 5) this.props.dispatch(selectChapter(this.props.selectedChapter + 1))
     else this.props.dispatch(selectChapter(0))
-    // if(this.state.chapter < storyText.length - 1) this.setState({chapter: this.state.chapter + 1 })
-    // else {
-    //   this.setState({chapter: 0})
-    //   // this.props.history.push('/about')
-    // }
   }
   previousBlogPost = () => {
     scrollIncrement = 0
     scrollValue = 0
     if(this.props.selectedChapter > 0) this.props.dispatch(selectChapter(this.props.selectedChapter - 1))
     else  this.props.dispatch(selectChapter(5))
-    // if(this.state.chapter < storyText.length - 1) this.setState({chapter: this.state.chapter + 1 })
-    // else {
-    //   this.setState({chapter: 0})
-    //   // this.props.history.push('/about')
-    // }
   }
 
   onWheel = (e) => {
@@ -136,8 +153,8 @@ class Home extends Component {
   componentDidUpdate(oldProps,oldState){
     if(!this.state.loading && !oldState.loading){
       this.setState({loading:true, midLoad: false})
-      setTimeout(()=>this.setState({midLoad: true}), 500)
-      setTimeout(()=>this.setState({loading: false, midLoad: false}), 1000)
+      setTimeout(()=>this.setState({midLoad: true}), 750)
+      setTimeout(()=>this.setState({loading: false, midLoad: false}), 1500)
     }
   }
 

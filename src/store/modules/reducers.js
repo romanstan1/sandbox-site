@@ -27,8 +27,8 @@ const initialState = {
     },
     {
       tag: 4,
-      title: 'Digital endpoints - the frictionless world',
-      text: 'Digital endpoints - <br /> the frictionless world',
+      title: 'Digital endpoints – the frictionless world',
+      text: 'Digital endpoints – <br /> the frictionless world',
       link:'https://medium.com/',
       backgroundImage: assets[3]
     },
@@ -43,7 +43,6 @@ const initialState = {
 }
 
 export default (state=initialState, action)=>{
-  console.log("action.payload",action.payload)
   switch(action.type){
     case 'SELECT_CHAPTER': return {
       ...state,

@@ -1,16 +1,3 @@
-import * as THREE from 'three'
-
-/**
- * @author qiao / https://github.com/qiao
- * @author mrdoob / http://mrdoob.com
- * @author alteredq / http://alteredqualia.com/
- * @author WestLangley / http://github.com/WestLangley
- * @author erich666 / http://erichaines.com
- */
-
-var FOUR = {}
-
-
 
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
@@ -19,7 +6,7 @@ var FOUR = {}
 //    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish
 //    Pan - right mouse, or arrow keys / touch: three finger swipe
 
-FOUR.OrbitControls = function ( object, domElement ) {
+THREE.OrbitControls = function ( object, domElement ) {
 
 	this.object = object;
 
@@ -428,7 +415,7 @@ FOUR.OrbitControls = function ( object, domElement ) {
 
 	function handleMouseDownDolly( event ) {
 
-		console.log( 'handleMouseDownDolly' );
+		//console.log( 'handleMouseDownDolly' );
 
 		dollyStart.set( event.clientX, event.clientY );
 
@@ -436,7 +423,7 @@ FOUR.OrbitControls = function ( object, domElement ) {
 
 	function handleMouseDownPan( event ) {
 
-		console.log( 'handleMouseDownPan' );
+		//console.log( 'handleMouseDownPan' );
 
 		panStart.set( event.clientX, event.clientY );
 
@@ -444,7 +431,7 @@ FOUR.OrbitControls = function ( object, domElement ) {
 
 	function handleMouseMoveRotate( event ) {
 
-		console.log( 'handleMouseMoveRotate' );
+		//console.log( 'handleMouseMoveRotate' );
 
 		rotateEnd.set( event.clientX, event.clientY );
 		rotateDelta.subVectors( rotateEnd, rotateStart );
@@ -771,9 +758,10 @@ FOUR.OrbitControls = function ( object, domElement ) {
 		event.preventDefault();
 		event.stopPropagation();
 
+		scope.dispatchEvent( startEvent );
+
 		handleMouseWheel( event );
 
-		scope.dispatchEvent( startEvent ); // not sure why these are here...
 		scope.dispatchEvent( endEvent );
 
 	}
@@ -919,10 +907,10 @@ FOUR.OrbitControls = function ( object, domElement ) {
 
 };
 
-FOUR.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
-FOUR.OrbitControls.prototype.constructor = FOUR.OrbitControls;
+THREE.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
+THREE.OrbitControls.prototype.constructor = THREE.OrbitControls;
 
-Object.defineProperties( FOUR.OrbitControls.prototype, {
+Object.defineProperties( THREE.OrbitControls.prototype, {
 
 	center: {
 
@@ -1044,7 +1032,5 @@ Object.defineProperties( FOUR.OrbitControls.prototype, {
 		}
 
 	}
-} );
 
-// FOUR.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
-export default FOUR
+} );

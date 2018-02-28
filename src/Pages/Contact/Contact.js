@@ -13,16 +13,18 @@ class Contact extends Component {
 
           <div className='about'>
             <p>
-              Lorem ipsum dolor sit amet, consec tet ur ad ipisi cing elit.
-               Ad re pudi andae voluptas vel id ducimus expedita qui dignissimos quibusdam
-              iusto quisquam porro in sunt.
+              {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Similique quam odio vero commodi ad fugiat dolorum sunt est officiis porro veniam,
+              cumque doloremque amet, iusto tempora? Fuga maxime laudantium deleniti. */}
+              Progress is collaborative. <br/>
+              Talk to us.
             </p>
           </div>
 
           <div className='details'>
             <div>
               <h3>Contact</h3>
-              <a href="#">sandbox@theuniprogroup.com</a>
+              <a className='callToAction' href="#">sandbox@theuniprogroup.com</a>
             </div>
             <div>
               <h3>Visit</h3>
