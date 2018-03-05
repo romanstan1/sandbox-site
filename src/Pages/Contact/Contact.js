@@ -8,14 +8,11 @@ class Contact extends Component {
   render() {
     return (
       <div>
-        <Nav/>
+        <Nav className='contact'/>
         <div className='contact-content'>
 
           <div className='about'>
             <p>
-              {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Similique quam odio vero commodi ad fugiat dolorum sunt est officiis porro veniam,
-              cumque doloremque amet, iusto tempora? Fuga maxime laudantium deleniti. */}
               Progress is collaborative. <br/>
               Talk to us.
             </p>

@@ -1,48 +1,11 @@
 $stark: white;
-$hovercolor:#5000ff;
-$background:#1f1a25;
 
-
-
-$background:#1f1a25;
-
-$hovercolor:#5000ff;
-$hovercolor:#10e7dc;
 $background:#553d67;
 $greyBackground:#17252a;
 
-
-$hovercolor: #F6511D;
 $hovercolor: #3f00ff;
-
-
-// option 1 ---------------------------
-
-$hovercolor: #d83f87;
-$secondaryColor: #00cc9f;
-$buttonColor: #d83f87;
-
-
-// option 2 ---------------------------
-
-$hovercolor: #3f00ff;
-$secondaryColor: #f79e02;
 $secondaryColor: #3f00ff;
-$buttonColor: #f79e02; // oranger button
-$buttonColor: #ff3b00; // redder button
 $buttonColor: #00fff6; // lime button
-
-
-
-
-
-
-
-
-
-
-// $hovercolor: #e22d00;
-
 
 nav {
   position: absolute;
@@ -106,5 +69,11 @@ div.logo {
         height: 12px;
       }
     }
+  }
+}
+
+@media (max-width:1100px) {
+  nav.contact {
+    position: relative;
   }
 }

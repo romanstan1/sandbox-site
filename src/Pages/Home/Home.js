@@ -7,11 +7,6 @@ import './home.css'
 import {connect} from 'react-redux'
 import {init, stop} from './background/background.js'
 import {selectChapter} from '../../store/modules/actions'
-// import CubeBackground from './boilerplate/CubeBackground'
-
-// import background from './background/background'
-// var $ = window.$
-
 
 const ScrollArrow = () =>
 <div className="scroll-arrow">
@@ -22,7 +17,6 @@ const LoadingScreen = ({loading}) =>
 <div className={loading? 'loading-screen on': 'loading-screen off' }>
   <div></div>
 </div>
-
 
 class HomeContent extends Component {
   shouldComponentUpdate(next) {
@@ -36,7 +30,6 @@ class HomeContent extends Component {
         style={!!imgSrc? {backgroundImage: `url(${imgSrc})`}: null}>
         <Title refresh={shouldComponentUpdate} titleText={titleText} />
         <Background />
-        {/* <CubeBackground/> */}
         <div className={imgSrc?'overlayBlend':null}></div>
         <div className={imgSrc?'secondOverlayBlend':null}></div>
         <ScrollNavigation/>
@@ -105,7 +98,7 @@ class Home extends Component {
 
   onWheel = (e) => {
 
-    console.log("onWheel", e.deltaY, e)
+    // console.log("onWheel", e.deltaY, e)
 
     clearTimeout(wheeling);
      wheeling = setTimeout(() => {
