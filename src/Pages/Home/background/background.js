@@ -11,7 +11,9 @@ var camera,
 	mouse,
 	mouseAbsolute = {x:0,y:0},
 	sphere,
+	sphereCoords={},
 	meshes = [],
+	midPoint = {},
 	meshesSearch = [],
 	meshCountMax = 100,
 	radius = 500,
@@ -27,6 +29,15 @@ var camera,
 	origin = new THREE.Vector3(),
 	direction = new THREE.Vector3();
 
+
+function setMidPoint() {
+	midPoint.x = window.innerWidth / 2
+	midPoint.y = window.innerHeight / 2
+	console.log("midPoint: ",midPoint)
+	console.log("sphereCoords: ", sphereCoords)
+	console.log("mouse: ", mouse)
+}
+
 export function init() {
 	scene = new THREE.Scene();
 	// scene.background = new THREE.Color( 0xf0f0f0 );
@@ -37,6 +48,9 @@ export function init() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	var info = document.getElementById('container')
 	info.appendChild( renderer.domElement );
+
+	setMidPoint()
+
 	octree = new THREE.Octree({
 		undeferred: false,
 		depthMax: Infinity,
@@ -51,25 +65,24 @@ export function init() {
 	);
 	scene.add( searchMesh );
 	window.addEventListener( 'mousemove', onMouseMove, false );
+	window.addEventListener( 'resize', setMidPoint, false );
 	new WindowResize(renderer, camera)
 
-	sphere = document.getElementById('sphere')
-	sphere.x = 0
-	sphere.y = 0
-	// console.log("sphere",sphere)
-
+	// sphere = document.getElementById('sphere')
+	sphereCoords.x = 0
+	sphereCoords.y = 0
 	animate();
 }
 
 function followMouse() {
-	var distX = mouseAbsolute.x - sphere.x;
-	var distY = mouseAbsolute.y - sphere.y;
+	var distX = mouseAbsolute.x - sphereCoords.x;
+	var distY = mouseAbsolute.y - sphereCoords.y;
 
-	sphere.x += distX/10;
-	sphere.y += distY/4;
+	sphereCoords.x += distX/75;
+	sphereCoords.y += distY/14;
 
-	sphere.style.left = sphere.x + "px";
-	sphere.style.top = sphere.y + "px";
+	// sphere.style.left = sphereCoords.x + "px";
+	// sphere.style.top = sphereCoords.y + "px";
 }
 
 function stopAnimation() {
@@ -77,6 +90,7 @@ function stopAnimation() {
 	camera, scene, renderer, octree, frameRequest, mesh, mouse = null
 	adding = true
 	meshes = []
+	sphereCoords = {}
 	meshesSearch = []
 	window.removeEventListener( 'mousemove', onMouseMove, false );
 	var info = document.getElementById('container')
@@ -142,8 +156,13 @@ function searchOctree() {
 function render() {
 	var timer = - Date.now() / 10000;
 
-	camera.position.x = Math.cos( timer ) * 10000 * mouse.x;
+	const panViewBy = sphereCoords.x / window.innerWidth
+	// sphereCoords.y / window.innerHeight
+
+	camera.position.x = Math.cos( timer ) * 10000 * panViewBy
+	// camera.position.x = Math.cos( timer ) * 10000 * mouse.x;
 	camera.position.z = Math.sin( timer ) * 10000;
+	// console.log("sphere: ",sphere)
 	// if(mouse.x > 0) {
 	// 	camera.position.x = Math.cos( timer ) * 10000;
 	// 	camera.position.z = Math.sin( timer ) * 10000;

@@ -56,8 +56,8 @@ class Background extends Component {
   }
   render() {
     return [
-      <div key='scene' className="scene scene--full" id="container"></div>,
-      <div key='sphere' id="sphere"></div>
+      <div key='scene' className="scene scene--full" id="container"></div>
+      // <div key='sphere' id="sphere"></div>
     ]
   }
 }
@@ -78,31 +78,15 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // this.stopStartAnimation(this, nextProps)
-
-    // $('#feel-the-wave-two').wavify({
-    //   height: 0,
-    //   bones: 3,
-    //   amplitude: 100,
-    //   color: 'rgba(150, 97, 255, .8)',
-    //   speed: 0.2
-    // });
     if(this.props.selectedChapter === 0) init()
   }
   componentWillUnmount() {
-    // stopAnimation()
     stop()
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.selectedChapter === 0) init('delay')
     else if(this.props.selectedChapter === 0) stop(750)
-
-    // setTimeout((nextProps, context) => {
-    //   console.log("context",context)
-    //   if(nextProps && nextProps.selectedChapter === 0) init()
-    //   else if(context.props.selectedChapter === 0) stop()
-    // }, 750)
   }
 
 
@@ -121,7 +105,7 @@ class Home extends Component {
 
   onWheel = (e) => {
 
-    // console.log("onWheel")
+    console.log("onWheel", e.deltaY, e)
 
     clearTimeout(wheeling);
      wheeling = setTimeout(() => {
