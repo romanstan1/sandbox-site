@@ -106,7 +106,7 @@ class Home extends Component {
   }
 
   onScroll = (deltaY, scrollOveride) => {
-    console.log("onScroll", scrollOveride)
+    // console.log("onScroll", scrollOveride)
     clearTimeout(wheeling);
      wheeling = setTimeout(() => {
        wheeling = undefined;
@@ -115,8 +115,8 @@ class Home extends Component {
        lowerThreshold = -10
      }, 200);
 
-    if (deltaY < 0) scrollValue = scrollValue + scrollIncrement
-    else if (deltaY > 0) scrollValue = scrollValue - scrollIncrement
+    if (deltaY < 0) scrollValue = scrollValue - scrollIncrement
+    else if (deltaY > 0) scrollValue = scrollValue + scrollIncrement
 
     if(scrollValue > upperThreshold || scrollOveride > 50) {
       this.nextBlogPost()
