@@ -7,6 +7,8 @@ import './home.css'
 import {connect} from 'react-redux'
 import {init, stop} from './background/background.js'
 import {selectChapter} from '../../store/modules/actions'
+import Swipeable from 'react-swipeable'
+
 
 const ScrollArrow = () =>
 <div className="scroll-arrow">
@@ -82,7 +84,6 @@ class Home extends Component {
     else if(this.props.selectedChapter === 0) stop(750)
   }
 
-
   nextBlogPost = () => {
     scrollIncrement = 0
     scrollValue = 0
@@ -97,9 +98,15 @@ class Home extends Component {
   }
 
   onWheel = (e) => {
+    this.onScroll(e.deltaY, 0)
+  }
 
-    // console.log("onWheel", e.deltaY, e)
+  onSwipe = (e, deltaX, deltaY, isFlick, velocity) => {
+    this.onScroll(0, deltaY)
+  }
 
+  onScroll = (deltaY, scrollOveride) => {
+    console.log("onScroll", scrollOveride)
     clearTimeout(wheeling);
      wheeling = setTimeout(() => {
        wheeling = undefined;
@@ -108,20 +115,17 @@ class Home extends Component {
        lowerThreshold = -10
      }, 200);
 
-    if (e.deltaY < 0) {
-      scrollValue = scrollValue + scrollIncrement;
-    } else if (e.deltaY > 0) {
-      scrollValue = scrollValue - scrollIncrement;
-    }
+    if (deltaY < 0) scrollValue = scrollValue + scrollIncrement
+    else if (deltaY > 0) scrollValue = scrollValue - scrollIncrement
 
-    if(scrollValue > upperThreshold) {
+    if(scrollValue > upperThreshold || scrollOveride > 50) {
       this.nextBlogPost()
       upperThreshold = 50
       setTimeout(() => {
         scrollIncrement = 1
         scrollValue = 0
       }, 400);
-    } else if(scrollValue < lowerThreshold) {
+    } else if(scrollValue < lowerThreshold || scrollOveride < -50) {
       this.previousBlogPost()
       lowerThreshold = -50
       setTimeout(() => {
@@ -143,17 +147,17 @@ class Home extends Component {
   render() {
     const {selectedChapter, blogPosts} = this.props
     const titleText = blogPosts.filter((post,i) => post.tag === selectedChapter)[0]
-
-    if(!!titleText) {
-      var imgSrc = titleText.backgroundImage
-    }
+    if(!!titleText) { var imgSrc = titleText.backgroundImage }
     const newImgSrc = blogPosts[0].backgroundImage
+
     return (
-      <div onWheel={this.onWheel} onTouchMove={this.onWheel}>
-        <LoadingScreen loading={this.state.loading}/>
-        <Nav/>
-        <HomeContent shouldComponentUpdate={this.state.midLoad} imgSrc={imgSrc} titleText={titleText}/>
-      </div>
+      <Swipeable
+        onWheel={this.onWheel}
+        onSwiped={this.onSwipe}>
+          <LoadingScreen loading={this.state.loading}/>
+          <Nav/>
+          <HomeContent shouldComponentUpdate={this.state.midLoad} imgSrc={imgSrc} titleText={titleText}/>
+      </Swipeable>
     )
   }
 }
